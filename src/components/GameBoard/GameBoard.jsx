@@ -4,8 +4,9 @@ import styles from './GameBoard.module.scss'
 
 class GameBoard extends Component {
   render() {
+    const classList = `game-board ${styles.container}`
     return (
-      <div className={styles.container}>
+      <div className={classList}>
       </div>
     )
   }
