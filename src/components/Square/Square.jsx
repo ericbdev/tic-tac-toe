@@ -1,10 +1,16 @@
 import React from 'react';
 import Proptypes from 'prop-types';
+import styles from './Square.module.scss'
 
 const Square = (props) => {
   return (
-    <div>
-      <button onClick={props.onClick}>Square</button>
+    <div className={styles.container}>
+      <button
+        className={styles.square} 
+        onClick={props.onClick}
+      >
+        Square
+      </button>
     </div>
   );
 };
