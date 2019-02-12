@@ -45,6 +45,21 @@ class App extends Component {
     });
   };
 
+  jumpTo(step) {
+    this.setState({
+      stepNumber: step,
+      xIsNext: (step % 2) === 0
+    });
+  }
+
+  undoMove = () => {
+    this.jumpTo(this.state.stepNumber - 1);
+  }
+
+  resetGame = () => {
+    this.jumpTo(0);
+  }
+
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
@@ -65,8 +80,8 @@ class App extends Component {
             onClick={(i) => this.handleClick(i)}
           />
           <GameActions>
-            <Button>Hey, go back a step!</Button>
-            <Button>Nah, lets start over.</Button>
+            <Button onClick={this.undoMove}>Hey, go back a step!</Button>
+            <Button onClick={this.resetGame}>Nah, lets start over.</Button>
           </GameActions>
           <div className={styles.status}>
             <div>{status}</div>
