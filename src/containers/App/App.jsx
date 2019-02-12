@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import styles from './App.module.scss';
 import calculateWinner from '../../lib/calculateWinner';
+
+import Game from '../../components/Game/Game';
 import GameBoard from '../../components/GameBoard/GameBoard';
+import GameActions from '../../components/GameActions/GameActions'
 
 class App extends Component {
   constructor(props) {
@@ -16,8 +19,6 @@ class App extends Component {
       stepNumber: 0,
       xIsNext: true,
     };
-
-    this.squares = Array(9).fill(null);
   }
 
   handleClick = (i) => {
@@ -56,13 +57,17 @@ class App extends Component {
 
     return (
       <main className={styles.container}>
-        <GameBoard
-          squares={current.squares}
-          onClick={(i) => this.handleClick(i)}
-        />
-        <div className={styles.status}>
-          <div>{status}</div>
-        </div>
+        <Game>
+          <GameBoard
+            squares={current.squares}
+            onClick={(i) => this.handleClick(i)}
+          />
+          <GameActions>
+          </GameActions>
+          <div className={styles.status}>
+            <div>{status}</div>
+          </div>
+        </Game>
       </main>
     );
   }
