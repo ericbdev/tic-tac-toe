@@ -1,0 +1,20 @@
+$size-base: 320px;
+
+/* autoprefixer grid: autoplace */
+.container {
+  height: $size-base;
+  margin-right: auto;
+  margin-left: auto;
+  background-color: black;
+  color: #fff;
+  display: grid;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+
+  @media screen and (min-width: 500px) {
+    height: $size-base * 1.5;
+  }
+
+  @media screen and (min-width: 1024px) {
+    height: $size-base * 2;
+  }
+}
