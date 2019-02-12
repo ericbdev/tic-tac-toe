@@ -1,15 +1,23 @@
 import React from 'react';
-import styles from './Square.module.scss'
+import styles from './Square.module.scss';
+
+import { IconO, IconX } from '../Icons/';
 
 const Square = (props) => {
-  console.log(props);
   return (
     <div className={styles.container}>
       <button
         className={styles.square}
         onClick={props.onClick}
       >
-        {props.value}
+        <div className='icon-container'>
+          {
+            props.value === 'X' && <IconX />
+          }
+          {
+            props.value === 'O' && <IconO />
+          }
+        </div>
       </button>
     </div>
   );
