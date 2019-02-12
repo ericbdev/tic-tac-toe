@@ -7,12 +7,15 @@ import Button from '../../components/Button/Button';
 import Game from '../../components/Game/Game';
 import GameBoard from '../../components/GameBoard/GameBoard';
 import GameActions from '../../components/GameActions/GameActions'
+import GameStatus from '../../components/GameStatus/GameStatus';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      winner: null,
+      isTied: false,
       history: [
         {
           squares: Array(9).fill(null),
@@ -24,53 +27,59 @@ class App extends Component {
   }
 
   handleClick = (i) => {
-    const history = this.state.history.slice(0, this.state.stepNumber + 1);
+    // Stop if winner already chosen
+    if (this.state.winner) {
+      return;
+    }
+
+    const currentStep = this.state.stepNumber + 1;
+    const history = this.state.history.slice(0, currentStep);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
 
-    // THis does two things?
-    if (calculateWinner(squares) || squares[i]) {
+    // Stop if winner, or if square is played
+    if (squares[i]) {
       return;
     }
 
     squares[i] = this.state.xIsNext ? 'X' : 'O';
+    const nextHistory = history.concat([
+      {
+        squares: squares,
+      },
+    ]);
+    const winner = calculateWinner(squares);
+    const isTied = currentStep === 9 && !winner;
+
     this.setState({
-      history: history.concat([
-        {
-          squares: squares,
-        },
-      ]),
+      history: nextHistory,
       stepNumber: history.length,
       xIsNext: !this.state.xIsNext,
+      winner,
+      isTied,
     });
   };
 
-  jumpTo(step) {
+  changeStep(step) {
     this.setState({
+      isTied: false,
+      winner: null,
       stepNumber: step,
       xIsNext: (step % 2) === 0
     });
   }
 
   undoMove = () => {
-    this.jumpTo(this.state.stepNumber - 1);
+    this.changeStep(this.state.stepNumber - 1);
   }
 
   resetGame = () => {
-    this.jumpTo(0);
+    this.changeStep(0);
   }
 
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
-    const winner = calculateWinner(current.squares);
-
-    let status;
-    if (winner) {
-      status = 'Winner: ' + winner;
-    } else {
-      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-    }
 
     return (
       <main className={styles.container}>
@@ -83,9 +92,11 @@ class App extends Component {
             <Button onClick={this.undoMove}>Hey, go back a step!</Button>
             <Button onClick={this.resetGame}>Nah, lets start over.</Button>
           </GameActions>
-          <div className={styles.status}>
-            <div>{status}</div>
-          </div>
+          <GameStatus
+            winner={this.state.winner}
+            xIsNext={this.state.xIsNext}
+            isTied={this.state.isTied}
+          />
         </Game>
       </main>
     );
