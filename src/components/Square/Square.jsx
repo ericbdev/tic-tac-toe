@@ -1,22 +1,18 @@
 import React from 'react';
-import Proptypes from 'prop-types';
 import styles from './Square.module.scss'
 
 const Square = (props) => {
+  console.log(props);
   return (
     <div className={styles.container}>
       <button
-        className={styles.square} 
+        className={styles.square}
         onClick={props.onClick}
       >
-        Square
+        {props.value}
       </button>
     </div>
   );
 };
-
-Square.propTypes = {
-  onClick: Proptypes.func.isRequired,
-}
 
 export default Square;

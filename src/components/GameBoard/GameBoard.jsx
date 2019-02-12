@@ -4,17 +4,17 @@ import Square from '../Square/Square'
 import styles from './GameBoard.module.scss';
 
 class GameBoard extends Component {
-  handleClick = () => {
-
-  }
-
   render() {
     const classList = `game-board ${styles.container}`;
 
     return (
       <div className={classList}>
         {this.props.squares.map((value, index) => {
-          return <Square onClick={this.handleClick} key={index} />;
+          return <Square
+            key={index}
+            value={value}
+            onClick={() => this.props.onClick(index)}
+          />
         })}
       </div>
     );
@@ -23,6 +23,7 @@ class GameBoard extends Component {
 
 GameBoard.propTypes = {
   squares: Proptypes.array.isRequired,
+  onClick: Proptypes.func.isRequired,
 };
 
 export default GameBoard;
