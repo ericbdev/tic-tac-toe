@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import styles from './App.module.scss';
 import calculateWinner from '../../lib/calculateWinner';
 
+import Button from '../../components/Button/Button';
+
 import Game from '../../components/Game/Game';
 import GameBoard from '../../components/GameBoard/GameBoard';
 import GameActions from '../../components/GameActions/GameActions'
@@ -63,6 +65,8 @@ class App extends Component {
             onClick={(i) => this.handleClick(i)}
           />
           <GameActions>
+            <Button>Hey, go back a step!</Button>
+            <Button>Nah, lets start over.</Button>
           </GameActions>
           <div className={styles.status}>
             <div>{status}</div>
