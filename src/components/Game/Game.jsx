@@ -1,12 +1,18 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
+import Proptypes from 'prop-types';
+import classNames from 'classnames';
 import styles from './Game.module.scss';
 
-export default class Game extends PureComponent {
-  render() {
-    return (
-      <div className={styles.container}>
-        {this.props.children}
-      </div>
-    );
-  }
-}
+const Game = (props) => {
+  return (
+    <div className={classNames(styles.container, 'js-game')}>
+      {props.children}
+    </div>
+  );
+};
+
+Game.propTypes = {
+  children: Proptypes.element.isRequired,
+};
+
+export default Game;
